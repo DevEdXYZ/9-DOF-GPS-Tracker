@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>9-DOF GPS Tracker</title>
+    <style>#map{height:100vh;}</style>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/config.js"></script>
+    <script>
+      let map;
+      const path = [];
+      function loadMap() {
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${window.GOOGLE_MAPS_API_KEY}&callback=initMap`;
+        document.head.appendChild(script);
+      }
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {zoom:15, center:{lat:0,lng:0}});
+      }
+      window.initMap = initMap;
+      window.addEventListener('load', loadMap);
+      const socket = io();
+      socket.on('packet', d => {
+        const [lat, lon] = d.split(',');
+        const pos = {lat: parseFloat(lat), lng: parseFloat(lon)};
+        path.push(pos);
+        if (map) {
+          new google.maps.Polyline({path, map});
+          map.setCenter(pos);
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+  </body>
+</html>
