@@ -110,9 +110,9 @@ A wearable GPS + 9-DOF IMU tracker that logs fused position data (GPS + sensor f
 
 ### Base Station Server/UI
 
-1. **Clone & install**  
+1. **Clone & install**
    ```bash
-   cd ../base-station
+   cd base-station
    npm install
    ```
 2. **Configure**  
@@ -144,6 +144,8 @@ Base Station:
   Feather USB → PC/Laptop
   Feather 3V/GND → (power only)
 ```
+
+For detailed pin references and assembly photos, see [docs/wiring.md](docs/wiring.md).
 
 ### 3D-Printed Enclosure
 
